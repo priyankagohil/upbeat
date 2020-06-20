@@ -4,8 +4,12 @@ from flask import render_template,url_for,flash,request,redirect,Blueprint, curr
 from flask_login import current_user,login_required
 from upbeatmusicmanager import db
 from upbeatmusicmanager.models import Music
-from upbeatmusicmanager.songs.forms import MusicForm
+from upbeatmusicmanager.songs.forms import MusicForm, SearchForm
 from werkzeug.utils import secure_filename
+import flask_whooshalchemy as wa
+from whoosh.analysis import StemmingAnalyzer
+
+
 
 songs = Blueprint('songs',__name__)
 
@@ -14,6 +18,7 @@ songs = Blueprint('songs',__name__)
 # song > blog_post    # singer > date
 # s > post            #   > text
 #####################################################
+
 
 # CREATE
 @songs.route('/upload',methods=['GET','POST'])
@@ -39,8 +44,6 @@ def upload_song():
     return render_template('upload.html',form=form)
 
 
-
-
 # songs (VIEW)
 @songs.route('/<int:song_id>')
 def song(song_id):
@@ -64,3 +67,22 @@ def delete_song(song_id):
     db.session.commit()
 
     return redirect(url_for('core.index'))
+
+
+#SEARCH
+@songs.route('/search', methods=['GET', 'POST'])
+@login_required
+def search_song():
+    form = SearchForm()
+    if request.method == 'POST' and form.validate_on_submit():
+        query = request.args.get(form.search.data)
+        results = Music.query.whoosh_search(query).all()
+        return render_template('search.html', songs=results, form=form)
+    return render_template('search.html', form = form)
+
+@songs.route('/search/<query>', methods=['GET', 'POST'])
+@login_required
+def search_results(query):
+    form = SearchForm()
+    results = Music.query.whoosh_search(query).all()
+    return render_template('search.html', songs=results, form=form)

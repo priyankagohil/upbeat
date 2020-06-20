@@ -43,7 +43,7 @@ def login():
             next = request.args.get('next')
 
             if next ==None or not next[0]=='/':
-                next = url_for('users.user_songs')
+                next = url_for('users.user_songs', username=current_user.username)
 
             return redirect(next)
 

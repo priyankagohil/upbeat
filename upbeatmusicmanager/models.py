@@ -1,6 +1,10 @@
 from upbeatmusicmanager import db,login_manager
 from werkzeug.security import generate_password_hash,check_password_hash
 from flask_login import UserMixin
+import flask_whooshalchemyplus as wa
+from whoosh.analysis import StemmingAnalyzer
+from app import app
+from flask_whooshalchemyplus import index_all
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -29,6 +33,8 @@ class User(db.Model,UserMixin):
         return f"Username {self.username}"
 
 class Music(db.Model):
+    __searchable__ = ['title', 'album', 'singer']
+    __analyzer__ = StemmingAnalyzer()
     users = db.relationship(User)
 
     id = db.Column(db.Integer,primary_key=True)
@@ -47,3 +53,7 @@ class Music(db.Model):
 
     def __repr__(self):
         return f"Song ID: {self.id} --- {self.title} -- singer: {self.singer}"
+
+
+#wa.init_app(app)
+index_all(app)

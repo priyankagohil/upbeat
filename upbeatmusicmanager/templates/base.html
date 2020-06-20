@@ -24,7 +24,7 @@
               <a class="nav-link text-dark" href="{{url_for('users.user_songs', username=current_user.username)}}"><b>Playlist</b></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-dark" href="#"><b>Search</b></a>
+              <a class="nav-link text-dark" href="{{url_for('songs.search_song')}}"><b>Search</b></a>
             </li>
             <li class="nav-item">
               <a class="nav-link text-dark" href="{{url_for('songs.upload_song')}}"><b>Upload Music</b></a>

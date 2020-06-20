@@ -10,3 +10,7 @@ class MusicForm(FlaskForm):
     singer = StringField('Singer',validators=[DataRequired()])
     upload = FileField('Select mp3 file', validators=[FileAllowed(['mp3']),FileRequired()])
     submit = SubmitField("Upload")
+
+class SearchForm(FlaskForm):
+  search = StringField('Search with Title, Singer or Album', [DataRequired()])
+  submit = SubmitField('Search')

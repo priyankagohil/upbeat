@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+
+<header id="fh5co-header" class="fh5co-cover" role="banner"  style="  background-color: #fa8231;width: 100%; height: 250px;">
+
+  <div class="container getstarted">
+      <div class="row justify-content-center mt-5">
+
+          <div class="col-7">
+            <div class="container" style="background-color:#fff;padding:20px;">
+              <h4 class="text-center">Search your songs here!</h4>
+                <form method="POST">
+                  {{form.hidden_tag()}}
+                  <div class="form-group">
+                    {{form.search.label(class="form-control-label")}}
+                    {{form.search(class="form-control form-control-lg")}}
+                  </div>
+                  <div class="form-group text-center">
+                    {{form.submit(class="btn btn-danger btn-block")}}
+                  </div>
+                </form>
+              </div>
+            </div>
+      </div>
+  </div>
+</header>
+<br>
+{% if songs %}
+<div class="container" >
+    {% for s in songs %}
+    <a  style="text-decoration:None;" href="  {{ url_for('songs.song', song_id=s.id) }}">
+    <div class="card" style="margin-top:7px;" >
+
+      <div class="card-body">
+        <h2 class="card-title text-dark">{{ s.title }}</h2>
+        <h6 class="text-secondary">Album : {{s.album }}</h6>
+        <p class='text-muted'>Singer : {{s.singer}}</p>
+      </div>
+
+    </div>
+    </a>
+
+   {% endfor %}
+  <br>
+    <br>
+
+</div>
+
+{% endif %}
+{% endblock %}
