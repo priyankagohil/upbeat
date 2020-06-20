@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+<br>
+<br>
+<div class="row justify-content-center">
+  <div class="col-7">
+
+
+  <div class="container" style="background-color:#fff;padding:20px;">
+    <h4 class="text-center">Upload your song</h4>
+    <form class="form-group" method="POST" action = "" enctype="multipart/form-data">
+      {{form.hidden_tag()}}
+
+      <div class="form-group">
+        {{form.title.label(class="form-control-label")}}
+        {{form.title(class="form-control form-control-lg")}}
+      </div>
+      <div class="form-group">
+        {{form.album.label(class="form-control-label")}}
+        {{form.album(class="form-control form-control-lg")}}
+      </div>
+      <div class="form-group">
+        {{form.singer.label(class="form-control-label")}}
+        {{form.singer(class="form-control form-control-lg")}}
+      </div>
+      <div class="form-group">
+        {{form.upload.label(class="form-control-label")}}
+        {{form.upload(class="form-control form-control-lg")}}
+      </div>
+      <div class="form-group text-center">
+        {{form.submit(class="btn btn-danger btn-block")}}
+      </div>
+
+    </form>
+  </div>
+
+    </div>
+  </div>
+  <br>
+  <br>
+{% endblock %}
